@@ -26,7 +26,7 @@ public class ProductoController {
 	@GetMapping("ListadoProducto")
 	public String ListadoProducto(Model modelo) {
 	    // Recuperamos el listado de productos
-	    List<TblProducto> listado = iproductoservicio.ListadoProductos();
+	    List<TblProducto> listado = iproductoservicio.ListadoProducto();
 	    for (TblProducto lis : listado) {
 	        System.out.println("codigo " + lis.getIdproductocl3() + " " + " nombre " + lis.getNombrecl3());
 	    }
@@ -44,7 +44,7 @@ public class ProductoController {
 	    // Enviamos a la vista
 	    modelo.addAttribute("regproducto", producto);
 	    // Retornamos
-	    return "/Vistas/FrmCrearProducto";
+	    return "/Vistas/RegistrarProducto";
 	} // Fin del método registrar
 
 	// Método para guardar un nuevo producto
@@ -53,7 +53,7 @@ public class ProductoController {
 	    iproductoservicio.RegistrarProducto(producto);
 	    System.out.println("dato registrado en la bd");
 	    // Retornamos al listado
-	    return "redirect:/Vistas/ListadoProductos";
+	    return "redirect:/vistas/ListadoProducto";
 	} // Fin del método guardar producto
 
 	// Método para editar un producto existente
@@ -63,10 +63,15 @@ public class ProductoController {
 	    // Enviamos hacia la vista
 	    modelo.addAttribute("regproducto", producto);
 	    // Retornamos el formulario para crear producto
-	    return "/Vistas/FrmCrearProducto";
+	    return "/Vistas/RegistrarProducto";
 	} // Fin del método editar
 
-
-	
+	// Método para Eliminar un producto existente
+	@GetMapping("/eliminar/{id}")
+    public String eliminar(@PathVariable("id") Integer idProducto, Model modelo) {
+        iproductoservicio.Eliminar(idProducto);
+        System.out.println("dato Eliminado en la bd");
+        return "redirect:/vistas/ListadoProducto";
+    }
 	
 } //fin del controlador
